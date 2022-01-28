@@ -27,6 +27,11 @@ Bot.init = async (initOptions) => {
     const token = initOptions.token;
     console.log(`getting code ${code}`);
     console.log(`getting token ${token}`);
+    console.log(`rc ${JSON.stringify({
+        clientId: process.env.RINGCENTRAL_CHATBOT_CLIENT_ID,
+        clientSecret: process.env.RINGCENTRAL_CHATBOT_CLIENT_SECRET,
+        server: process.env.RINGCENTRAL_SERVER,
+    }, null, 2)}`);
     const rc = new core_1.default({
         clientId: process.env.RINGCENTRAL_CHATBOT_CLIENT_ID,
         clientSecret: process.env.RINGCENTRAL_CHATBOT_CLIENT_SECRET,
@@ -34,6 +39,10 @@ Bot.init = async (initOptions) => {
     });
     if (code) {
         console.log('[PUBLIC]rc authorizing...');
+        console.log(`req ${JSON.stringify({
+            code,
+            redirect_uri: process.env.RINGCENTRAL_CHATBOT_SERVER + '/bot/oauth',
+        }, null, 2)}`);
         // public bot
         await rc.authorize({
             code,
