@@ -10,12 +10,16 @@ const createApp = (handle: Function, conf: BotConfig) => {
   app.use(express.urlencoded({ extended: true }))
   const {Bot} = conf.models || {}
   app.all('/oauth', async (req, res) => {
+    console.log('doing oauth on bot...');
     const bot = (await (Bot as any).init({
       code: req.query.code,
       token: req.body,
     })) as BotType;
+    console.log('start setting up webhook...');
     await bot.setupWebHook(); // this might take a while, depends on when the bot user is ready
+    console.log('finish setting up webhook');
     await handle({type: 'BotAdded', bot});
+    console.log('BotAdded handle done');
     res.send('');
   });
 

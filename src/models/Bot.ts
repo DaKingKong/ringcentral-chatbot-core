@@ -2,7 +2,7 @@ import Sequelize from 'sequelize';
 import RingCentral from '@rc-ex/core';
 import waitFor from 'wait-for-async';
 import FormData from 'form-data';
-import {TokenInfo} from '@rc-ex/core/lib/definitions';
+import { TokenInfo } from '@rc-ex/core/lib/definitions';
 import RestException from '@rc-ex/core/lib/RestException';
 
 import sequelize from './sequelize';
@@ -70,7 +70,7 @@ type InitOptions = {
     const id = r.data.id.toString();
     return Bot.create({
       id,
-      token: {...token, owner_id: id},
+      token: { ...token, owner_id: id },
     });
   }
   return undefined;
@@ -132,8 +132,11 @@ Bot.prototype.ensureWebHook = async function () {
 };
 Bot.prototype.setupWebHook = async function () {
   let done = false;
+  let attemptCount = 0;
   while (!done) {
     try {
+      attemptCount++;
+      console.log(`starting attempt ${attemptCount}...`)
       await this.rc.post('/restapi/v1.0/subscription', {
         eventFilters: [
           '/restapi/v1.0/glip/posts',
@@ -147,6 +150,7 @@ Bot.prototype.setupWebHook = async function () {
         },
       });
       done = true;
+      console.log('attempt successful');
     } catch (e) {
       if (!(e instanceof RestException)) {
         throw e;
@@ -157,7 +161,7 @@ Bot.prototype.setupWebHook = async function () {
       }
       const errorCode = e.response.data.errorCode;
       if (errorCode === 'SUB-406') {
-        await waitFor({interval: 10000});
+        await waitFor({ interval: 10000 });
         continue;
       }
       throw e;
@@ -215,7 +219,7 @@ Bot.prototype.remove = async function () {
 
 Bot.prototype.rename = async function (newName: string) {
   await this.rc.put('/restapi/v1.0/account/~/extension/~', {
-    contact: {firstName: newName},
+    contact: { firstName: newName },
   });
 };
 
@@ -241,7 +245,7 @@ Bot.prototype.getUser = async function (userId: string) {
     );
     rc = r.data;
   }
-  return {glip, rc};
+  return { glip, rc };
 };
 
 Bot.prototype.getSubscriptions = async function () {
