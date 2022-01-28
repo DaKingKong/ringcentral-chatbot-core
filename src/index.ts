@@ -23,6 +23,7 @@ export const extendApp = (
     for (const modelName in conf.models) {
       await conf.models[modelName].sync({ force });
     }
+    console.log('database setup finished');
   };
   const mergedHandle = async (event: any) => {
     let handled = false;
@@ -36,10 +37,10 @@ export const extendApp = (
       }
     }
   };
-  
+
   app.use(express.json());
-  app.use(express.urlencoded({extended: true}));
-  
+  app.use(express.urlencoded({ extended: true }));
+
   app.use(
     config.adminRoute,
     adminApp(mergedHandle, conf)
