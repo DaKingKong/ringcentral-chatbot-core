@@ -21,6 +21,7 @@ const extendApp = (app, skills = [], handle, config = {
         for (const modelName in conf.models) {
             await conf.models[modelName].sync({ force });
         }
+        console.log('database setup finished');
     };
     const mergedHandle = async (event) => {
         let handled = false;

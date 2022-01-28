@@ -25,12 +25,15 @@ const Bot = sequelize_2.default.define('bot', {
 Bot.init = async (initOptions) => {
     const code = initOptions.code;
     const token = initOptions.token;
+    console.log(`getting code ${code}`);
+    console.log(`getting token ${token}`);
     const rc = new core_1.default({
         clientId: process.env.RINGCENTRAL_CHATBOT_CLIENT_ID,
         clientSecret: process.env.RINGCENTRAL_CHATBOT_CLIENT_SECRET,
         server: process.env.RINGCENTRAL_SERVER,
     });
     if (code) {
+        console.log('[PUBLIC]rc authorizing...');
         // public bot
         await rc.authorize({
             code,
@@ -47,12 +50,14 @@ Bot.init = async (initOptions) => {
           endpoint_id: 'p7GZlEVHRwKDwbx6UkH0YQ'
         }
         */
+        console.log('[PUBLIC]rc authorized');
         return Bot.create({
             id: token.owner_id,
             token,
         });
     }
     else if (token) {
+        console.log('[PRIVATE]rc authorizing...');
         // private bot
         /*
         {
@@ -65,6 +70,7 @@ Bot.init = async (initOptions) => {
         rc.token = token;
         const r = await rc.get('/restapi/v1.0/account/~/extension/~');
         const id = r.data.id.toString();
+        console.log('[PRIVATE]rc authorized');
         return Bot.create({
             id,
             token: { ...token, owner_id: id },
