@@ -52,6 +52,7 @@ type InitOptions = {
       code,
       redirect_uri: process.env.RINGCENTRAL_CHATBOT_SERVER + '/bot/oauth',
     });
+    console.log(`RC token: ${rc.token}`);
     const token = rc.token!;
     /*
     {
