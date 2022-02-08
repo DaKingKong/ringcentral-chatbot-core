@@ -48,10 +48,16 @@ type InitOptions = {
       redirect_uri: process.env.RINGCENTRAL_CHATBOT_SERVER + '/bot/oauth',
     }, null, 2)}`);
     // public bot
-    await rc.authorize({
-      code,
-      redirect_uri: process.env.RINGCENTRAL_CHATBOT_SERVER + '/bot/oauth',
-    });
+    try {
+      await rc.authorize({
+        code,
+        redirect_uri: process.env.RINGCENTRAL_CHATBOT_SERVER + '/bot/oauth',
+      });
+    }
+    catch (e) {
+      const error = e as RestException;
+      console.log(`ERRRORRRRR: ${JSON.stringify(error.response, null, 2)}`)
+    }
     console.log(`RC token: ${rc.token}`);
     const token = rc.token!;
     /*
