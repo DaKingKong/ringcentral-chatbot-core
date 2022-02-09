@@ -69,7 +69,7 @@ const createApp = (handle: Function, conf: BotConfig) => {
   });
 
   // create db tables if not exist
-  setupDatabase();
+  // setupDatabase();
 
   return app;
 };

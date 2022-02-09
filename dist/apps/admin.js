@@ -60,7 +60,7 @@ const createApp = (handle, conf) => {
         res.send(result);
     });
     // create db tables if not exist
-    setupDatabase();
+    // setupDatabase();
     return app;
 };
 exports.default = createApp;
