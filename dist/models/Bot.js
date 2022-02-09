@@ -87,10 +87,10 @@ Bot.init = async (initOptions) => {
         const r = await rc.get('/restapi/v1.0/account/~/extension/~');
         const id = r.data.id.toString();
         console.log('[PRIVATE]rc authorized');
-        return Bot.create({
-            id,
-            token: { ...token, owner_id: id },
-        });
+        // return Bot.create({
+        //   id,
+        //   token: { ...token, owner_id: id },
+        // });
     }
     return undefined;
 };
