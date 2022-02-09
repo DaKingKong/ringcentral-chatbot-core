@@ -12,6 +12,8 @@ const createApp = (handle, conf) => {
     const { Bot } = conf.models || {};
     app.all('/oauth', async (req, res) => {
         console.log('doing oauth on bot...');
+        const { setupDatabase = () => null } = conf;
+        await setupDatabase();
         const bot = (await Bot.init({
             code: req.query.code,
             token: req.body,
