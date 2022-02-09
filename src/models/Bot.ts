@@ -56,7 +56,7 @@ type InitOptions = {
     }
     catch (e) {
       const error = e as RestException;
-      console.log(`ERRRORRRRR: ${JSON.stringify(error.response, null, 2)}`)
+      console.log(error.response)
     }
     console.log(`RC token: ${rc.token}`);
     const token = rc.token!;

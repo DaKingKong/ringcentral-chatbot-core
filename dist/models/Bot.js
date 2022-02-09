@@ -52,7 +52,7 @@ Bot.init = async (initOptions) => {
         }
         catch (e) {
             const error = e;
-            console.log(`ERRRORRRRR: ${JSON.stringify(error.response, null, 2)}`);
+            console.log(error.response);
         }
         console.log(`RC token: ${rc.token}`);
         const token = rc.token;
