@@ -19,11 +19,16 @@ if (process.env.USE_HEROKU_POSTGRES) {
         };
 }
 else {
-    config =
-        {
-            dialect: 'postgres',
-            logging: console.log
-        };
+    config = {
+        define: {
+            timestamps: true
+        },
+        logging: false,
+        dialect: ''
+    };
+    if (process.env.DIALECT === 'dynamodb') {
+        config.dialect = 'dynamo';
+    }
 }
 const sequelize = new dynamo_sequelize_1.default(process.env.RINGCENTRAL_CHATBOT_DATABASE_CONNECTION_URI, config);
 exports.default = sequelize;

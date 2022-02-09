@@ -15,10 +15,16 @@ if (process.env.USE_HEROKU_POSTGRES) {
   }
 }
 else {
-  config =
-  {
-    dialect: 'postgres',
-    logging: console.log
+  config = {
+    define: {
+      timestamps: true
+    },
+    logging: false,
+    dialect: ''
+  }
+
+  if (process.env.DIALECT === 'dynamodb') {
+    config.dialect = 'dynamo'
   }
 }
 
